@@ -1,2 +1,4 @@
 # CM_Attack
-2020년 1학기  협동분산시스템 팀 프로젝트
+>2020/1  Collaborative Distributed System Term Project
+
+>>implemeted with Communication Framework (CM) by https://github.com/ccslab/CM
