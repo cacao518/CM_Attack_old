@@ -55,9 +55,9 @@ public class Client extends JFrame implements ActionListener{
 		
 		Container cont = this.getContentPane();
 		Toolkit kit = this.getToolkit();
-		ImageIcon image1 = new ImageIcon("weapon1.png");
-		ImageIcon image2 = new ImageIcon("weapon2.png");
-		ImageIcon logo = new ImageIcon("logo.png");
+		ImageIcon image1 = new ImageIcon("img/weapon1.png");
+		ImageIcon image2 = new ImageIcon("img/weapon2.png");
+		ImageIcon logo = new ImageIcon("img/logo.png");
 		panel1 = new JPanel();
 		label = new JLabel(logo);
 		panel1.add(label);
