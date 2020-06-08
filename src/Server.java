@@ -9,7 +9,7 @@ public class Server {
 	private CMServerEventHandler m_eventHandler;
 	private boolean m_bRun;
 	private int playerCount;
-	private GameManager[] GM;
+	private ArrayList<GameManager> GM;
 	
 	public Server()
 	{
@@ -17,6 +17,7 @@ public class Server {
 		m_eventHandler = new CMServerEventHandler(m_serverStub);
 		m_bRun = true;
 		playerCount = 0;
+		GM = new ArrayList(10);
 	}
 	public void CreateGM() {
 		
@@ -28,7 +29,6 @@ public class Server {
 		// TODO Auto-generated method stub
 		Server server = new Server();
 		server.m_serverStub.setAppEventHandler(server.m_eventHandler);
-		server.m_serverStub.setAppEventHandler(server.m_eventHandler2);
 		server.m_serverStub.startCM();
 
 	}
