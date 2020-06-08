@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -127,9 +129,23 @@ public class Client extends JFrame implements ActionListener{
    public void PlayerHit(int Hp) {
       
    }
+   public void sendmouse(int x, int y) {
+      CMUserEvent ue = new CMUserEvent();
+      ue.setStringID("move");
+      ue.setEventField(CMInfo.CM_INT, "x", String.valueOf(x));
+      ue.setEventField(CMInfo.CM_INT, "x", String.valueOf(y));
+      m_clientStub.send(ue,"SERVER");
+   }
+   public void sendKey(String x) {
+      CMUserEvent ue = new CMUserEvent();
+      ue.setStringID("move");
+      ue.setEventField(CMInfo.CM_STR, "x", x);
+      m_clientStub.send(ue,"SERVER");
+   }
    interface MouseListener {
       public void mouseClicked(MouseEvent e); // 마우스가 클릭되는 순간 호출
-      }
+      
+   }
    public void Login(Client client)
    {
       client.m_clientStub.loginCM(nameText.getText(), "1234");
@@ -155,6 +171,22 @@ public class Client extends JFrame implements ActionListener{
    {
       // 게임 결과창 윈도우
    }
+   
+   public class KeyListener extends KeyAdapter{
+      public void keyPressed(KeyEvent e) {
+         switch(e.getKeyChar()) { // 입력된 키 문자
+            case 'a': // <Enter> 키 입력
+               System.out.println("pressA");
+               sendKey("a");
+               break;
+            case 'd':
+               System.out.println("pressD");
+               sendKey("d");
+               break;
+         }
+      }
+   }
+
    public static void main(String[] args) {
       // TODO Auto-generated method stub
       Client client = new Client();
