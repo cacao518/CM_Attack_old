@@ -2,9 +2,8 @@
 /CMServerEventHandler.class
 /Client.class
 /GameManager.class
+/MatchDialog$1.class
+/MatchDialog.class
 /Player.class
 /PlayerManager.class
 /Server.class
-/UI/
-/MatchDialog$1.class
-/MatchDialog.class

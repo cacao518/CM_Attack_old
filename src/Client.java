@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 
 import kr.ac.konkuk.ccslab.cm.entity.CMUser;
 import kr.ac.konkuk.ccslab.cm.event.CMDummyEvent;
+import kr.ac.konkuk.ccslab.cm.event.CMUserEvent;
 import kr.ac.konkuk.ccslab.cm.info.CMInfo;
 import kr.ac.konkuk.ccslab.cm.info.CMInteractionInfo;
 import kr.ac.konkuk.ccslab.cm.stub.CMClientStub;
@@ -118,6 +119,12 @@ public class Client extends JFrame implements ActionListener{
 	public void Login(Client client)
 	{
 		client.m_clientStub.loginCM(nameText.getText(), "1234");
+		CMUserEvent ue = new CMUserEvent();
+		String name = "name";
+		int GunType = 1;
+		ue.setEventField(CMInfo.CM_STR, "name", name);
+		ue.setEventField(CMInfo.CM_INT, "GunType", String.valueOf(GunType));
+		m_clientStub.send(ue,"SERVER");
 	}
 	
 	public void Game()
