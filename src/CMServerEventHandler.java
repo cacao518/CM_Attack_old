@@ -34,16 +34,21 @@ public class CMServerEventHandler implements CMAppEventHandler {
 		switch(cme.getType())
 		{
 			case CMInfo.CM_SESSION_EVENT:
-				m_server.plusPlayerCount();
-				playerCount = m_server.getPlayerCount();
+				CMSessionEvent cse = (CMSessionEvent) cme;
+				if(cse.getID() == CMSessionEvent.LOGIN){
+					m_server.plusPlayerCount();
+					playerCount = m_server.getPlayerCount();
+				}
 				break;
 			case CMInfo.CM_DUMMY_EVENT:
 				processDummyEvent(cme);
 				break;
 			case CMInfo.CM_USER_EVENT:
 				CMUserEvent ue = (CMUserEvent) cme;
-				if(Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "groupNum")) == -1)
+				if(Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "groupNum")) == -1) {
+					System.out.println("けいしかいしかいしかいしかいしかいしぉ"+playerCount);
 					joinPlayer(cme);
+				}
 				else
 					playGame(cme);
 				break;
@@ -51,15 +56,20 @@ public class CMServerEventHandler implements CMAppEventHandler {
 		}
 	}
 	private void joinPlayer(CMEvent cme) {
+		System.out.println("joined");
 		CMUserEvent ue = (CMUserEvent) cme;
 		int GMIndex = (playerCount - 1) / 2;
-		int PMIndex = playerCount  % 2;
+		int PMIndex = playerCount % 2;
 		//System.out.println(GMIndex);
 		String ip = ue.getEventField(CMInfo.CM_STR, "ip");
 		String name = ue.getEventField(CMInfo.CM_STR, "name");
 		int gunType = Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "GunType"));
-		PlayerManager pm = new PlayerManager(ip, name, GMIndex,gunType);
-		GM.add(GMIndex, new GameManager(pm, PMIndex));
+		if(PMIndex == 1){
+			GM.add(GMIndex, new GameManager());
+		}
+		PlayerManager[] pm = GM.get(GMIndex).getPM();
+		pm[PMIndex].setProperty(ip, name, GMIndex, gunType);
+
 		if(PMIndex == 0) {
 			GM.get(GMIndex).m_gameStatus = 1;
 			CMUserEvent use = new CMUserEvent();
@@ -68,8 +78,8 @@ public class CMServerEventHandler implements CMAppEventHandler {
 			use.setEventField(CMInfo.CM_STR,"ip",ip);
 			use.setEventField(CMInfo.CM_STR,"name",name);
 			use.setEventField(CMInfo.CM_INT,"guntype",String.valueOf(gunType));
-			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[0].m_name));
-			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[1].m_name));
+			m_serverStub.send(use, GM.get(GMIndex).PM[0].m_name);
+			m_serverStub.send(use, GM.get(GMIndex).PM[1].m_name);
 		}
 	}
 	private void playGame(CMEvent cme){

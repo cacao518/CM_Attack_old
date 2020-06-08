@@ -15,9 +15,10 @@ public class Server{
 	{
 		m_serverStub = new CMServerStub();
 		GM = new ArrayList<GameManager>(10);
+		playerCount = 0;
 		m_eventHandler = new CMServerEventHandler(m_serverStub, GM, playerCount, this);
 		m_bRun = true;
-		playerCount = 0;
+
 	}
 	public void plusPlayerCount(){
 		this.playerCount++;

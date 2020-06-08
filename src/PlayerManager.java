@@ -26,7 +26,12 @@ public class PlayerManager {
 		this.m_playerPosY = 300;
 		this.m_isDie = false;
 	}
-
+	public void setProperty(String ip, String name, int group, int gunType){
+		this.setM_ip(ip);
+		this.setM_name(name);
+		this.setM_group(group);
+		this.setM_gunType(gunType);
+	}
 	public String getM_ip() {
 		return m_ip;
 	}
