@@ -47,6 +47,7 @@ public class CMClientEventHandler implements CMAppEventHandler {
 		String name = use.getEventField(CMInfo.CM_STR, "name");
 		int gunType = Integer.parseInt(use.getEventField(CMInfo.CM_INT, "guntype"));
 		client.otherPlayer = new Player(ip,name,group,gunType);
+		client.Game();
 	}
 	private void updateHPInfo(CMUserEvent use){
 		int damage = Integer.parseInt(use.getEventField(CMInfo.CM_INT, "damage"));

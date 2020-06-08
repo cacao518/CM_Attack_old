@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 
+import com.mysql.jdbc.log.Log;
 import kr.ac.konkuk.ccslab.cm.entity.CMUser;
 import kr.ac.konkuk.ccslab.cm.event.*;
 import kr.ac.konkuk.ccslab.cm.event.handler.CMAppEventHandler;
@@ -34,13 +35,14 @@ public class CMServerEventHandler implements CMAppEventHandler {
 		{
 			case CMInfo.CM_SESSION_EVENT:
 				m_server.plusPlayerCount();
+				playerCount = m_server.getPlayerCount();
 				break;
 			case CMInfo.CM_DUMMY_EVENT:
 				processDummyEvent(cme);
 				break;
 			case CMInfo.CM_USER_EVENT:
 				CMUserEvent ue = (CMUserEvent) cme;
-				if(Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "group")) == -1)
+				if(Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "groupNum")) == -1)
 					joinPlayer(cme);
 				else
 					playGame(cme);
@@ -51,22 +53,23 @@ public class CMServerEventHandler implements CMAppEventHandler {
 	private void joinPlayer(CMEvent cme) {
 		CMUserEvent ue = (CMUserEvent) cme;
 		int GMIndex = (playerCount - 1) / 2;
-		int PMIndex = (playerCount - 1) % 2;
+		int PMIndex = playerCount  % 2;
+		//System.out.println(GMIndex);
 		String ip = ue.getEventField(CMInfo.CM_STR, "ip");
 		String name = ue.getEventField(CMInfo.CM_STR, "name");
-		int gunType = Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "guntype"));
+		int gunType = Integer.parseInt(ue.getEventField(CMInfo.CM_INT, "GunType"));
 		PlayerManager pm = new PlayerManager(ip, name, GMIndex,gunType);
-		GM.set(GMIndex, new GameManager(pm, PMIndex));
-		if((playerCount - 1) % 2 == 0) {
+		GM.add(GMIndex, new GameManager(pm, PMIndex));
+		if(PMIndex == 0) {
 			GM.get(GMIndex).m_gameStatus = 1;
 			CMUserEvent use = new CMUserEvent();
 			use.setStringID("joinComplete");
 			use.setEventField(CMInfo.CM_INT,"group",String.valueOf(GMIndex));
 			use.setEventField(CMInfo.CM_STR,"ip",ip);
 			use.setEventField(CMInfo.CM_STR,"name",name);
-			use.setEventField(CMInfo.CM_INT,"group",String.valueOf(gunType));
-			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[PMIndex].m_name));
-			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[PMIndex - 1].m_name));
+			use.setEventField(CMInfo.CM_INT,"guntype",String.valueOf(gunType));
+			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[0].m_name));
+			m_serverStub.send(use, String.valueOf(GM.get(GMIndex).PM[1].m_name));
 		}
 	}
 	private void playGame(CMEvent cme){

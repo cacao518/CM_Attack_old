@@ -7,7 +7,6 @@ public class GameManager {
 	public GameManager(PlayerManager PM, int index) {
 		this.PM[index] = PM;
 		this.m_gameStatus = 0;
-
 	}
 	public void removeGM() {
 		this.PM = null;

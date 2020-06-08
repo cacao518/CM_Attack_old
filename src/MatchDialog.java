@@ -98,9 +98,9 @@ public class MatchDialog extends JDialog implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource()== Btn1 )
 		{	
-			client.Game();
-			//parent.matchDlg = null;
-			//dispose();
+			//client.Game();
+			parent.matchDlg = null;
+			dispose();
 		}
 	}
 	
