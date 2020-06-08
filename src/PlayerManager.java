@@ -2,16 +2,17 @@
 public class PlayerManager {
 	String m_ip;
 	String m_name;
-	String m_group;
+	int m_group;
 	int m_gunType;
 	int m_hp;
 	int m_bullet;
-	float m_aimX;
-	float m_aimY;
-	float m_playerPosX;
+	int m_aimX;
+	int m_aimY;
+	int m_playerPosX;
+	int m_playerPosY;
 	boolean m_isDie = false;
 	
-	public PlayerManager(String m_ip, String m_name, String m_group, int m_gunType) {
+	public PlayerManager(String m_ip, String m_name, int m_group, int m_gunType) {
 		super();
 		this.m_ip = m_ip;
 		this.m_name = m_name;
@@ -21,7 +22,8 @@ public class PlayerManager {
 		this.m_bullet = 30;
 		this.m_aimX = 0;
 		this.m_aimY = 0;
-		this.m_playerPosX = 0;
+		this.m_playerPosX = 300;
+		this.m_playerPosY = 300;
 		this.m_isDie = false;
 	}
 
@@ -41,11 +43,11 @@ public class PlayerManager {
 		this.m_name = m_name;
 	}
 
-	public String getM_group() {
+	public int getM_group() {
 		return m_group;
 	}
 
-	public void setM_group(String m_group) {
+	public void setM_group(int m_group) {
 		this.m_group = m_group;
 	}
 
@@ -77,7 +79,7 @@ public class PlayerManager {
 		return m_aimX;
 	}
 
-	public void setM_aimX(float m_aimX) {
+	public void setM_aimX(int m_aimX) {
 		this.m_aimX = m_aimX;
 	}
 
@@ -85,7 +87,7 @@ public class PlayerManager {
 		return m_aimY;
 	}
 
-	public void setM_aimY(float m_aimY) {
+	public void setM_aimY(int m_aimY) {
 		this.m_aimY = m_aimY;
 	}
 
@@ -93,7 +95,7 @@ public class PlayerManager {
 		return m_playerPosX;
 	}
 
-	public void setM_playerPosX(float m_playerPosX) {
+	public void setM_playerPosX(int m_playerPosX) {
 		this.m_playerPosX = m_playerPosX;
 	}
 

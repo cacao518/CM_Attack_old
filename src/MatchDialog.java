@@ -2,6 +2,9 @@
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,81 +25,103 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import kr.ac.konkuk.ccslab.cm.event.CMUserEvent;
+import kr.ac.konkuk.ccslab.cm.info.CMInfo;
+
 public class MatchDialog extends JDialog implements ActionListener{
 	int screenWidth;
 	int screenHeigth;
 	
-	Client parent;
-	
+	Client client;
+	LoginDialog parent;
 	JPanel root;
 	
 	JPanel panel1, panel2;
-	JButton Btn1, Btn2, Btn3;
+	JButton Btn1;
 
-	CardLayout card;
-	
 	JButton Pbt;
+
+	Font f1;
+	JLabel label;
 	
 	public void init() {
+		this.setLayout(new FlowLayout(FlowLayout.CENTER,500,15));
 		panel1 = new JPanel();
-		Btn1 = new JButton("All");
-		Btn2 = new JButton("My");
-		Btn3 = new JButton("Wrong");
-		
-		Pbt = new JButton("단어추가");
-		
+		label = new JLabel("로그인 중입니다...");
+		f1 = new Font("맑은 고딕", Font.BOLD, 17);
+		label.setFont(f1);
+		panel1.add(label);
+
+		panel2 = new JPanel();
+		Btn1 = new JButton("취소");
 		Btn1.addActionListener(this);
-		Btn2.addActionListener(this);
-		Btn3.addActionListener(this);
+		panel2.add(Btn1);
 		
-		panel1.add(Btn1);
-		panel1.add(Btn2);
-		panel1.add(Btn3);
-
-
-		Pbt.addActionListener(this);
-		
-		this.add(panel1, BorderLayout.NORTH);
-		this.add(panel2, BorderLayout.CENTER);
-		this.add(Pbt, BorderLayout.SOUTH);
+		this.add(panel1);
+		this.add(panel2);
 		
 		this.addWindowListener(new WindowAdapter() {
 		@Override
 		public void windowClosing(WindowEvent e) {
 			// TODO Auto-generated method stub
-			
 			super.windowClosing(e);
-			parent.dlg1 = null; // 부모의 dlg를 널로 해줘야 다시 다이얼로그창 띄울수있게 해놨기때문
+			parent.matchDlg = null; // 부모의 dlg를 널로 해줘야 다시 다이얼로그창 띄울수있게 해놨기때문
 			dispose(); // 자신만 사라짐
 		}});
 	}
 	
-	MatchDialog(Client client, String title, boolean modal)
+	MatchDialog(LoginDialog loginDlg, String title, boolean modal, Client c)
 	{
-		super(client, title, modal);
+		super(loginDlg, title, modal);
+		client = c;
 		init();
-		parent = client;
+		parent = loginDlg;
 		
 		Toolkit kit = this.getToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		this.screenWidth = screenSize.width;
 		this.screenHeigth = screenSize.height;
 		this.setTitle(title);
-		this.setSize(300, 500);
-		this.setLocation(screenWidth/2 -150 , screenHeigth/2 -250);
+		this.setSize(200, 150);
+		this.setLocation(screenWidth/2 -100 , screenHeigth/2 -75);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE); // x버튼 누르면 머할거야 (다이알로그창만 닫을래)
 		this.setVisible(true);
 		
 		this.setResizable(false); // 창 크기 조절 못하게
+		
+		Login();
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getSource()== Btn1 )
+		{	
+			//client.Game();
+			parent.matchDlg = null;
+			dispose();
+		}
 	}
-
+	
+	public void Login()
+	{
+      client.m_clientStub.loginCM(parent.nameText.getText(), "1234");
+      CMUserEvent ue = new CMUserEvent();
+      //String ip = m_clientStub.getMyself().getHost();
+      String ip = "ip";
+      String name = "name";
+      int GunType = 0; // 0:라이플, 1:스나이프
+      if(parent.rb1.isSelected() == true) GunType = 0; else GunType = 1;
+      int groupNum = -1;
+      ue.setEventField(CMInfo.CM_STR, "ip", ip);
+      ue.setEventField(CMInfo.CM_STR, "name", parent.nameText.getText());
+      ue.setEventField(CMInfo.CM_INT, "GunType", String.valueOf(GunType));
+      ue.setEventField(CMInfo.CM_INT, "groupNum", String.valueOf(groupNum));
+      client.m_clientStub.send(ue,"SERVER");
+      client.player = new Player(ip, name, groupNum, GunType);
+	}
+	
 	
 
 	
