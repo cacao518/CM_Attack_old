@@ -23,20 +23,17 @@ public class CMClientEventHandler implements CMAppEventHandler {
 				break;
 			case CMInfo.CM_USER_EVENT:
 				CMUserEvent use = (CMUserEvent) cme;
-				switch (use.getStringID()){
+				switch (use.getStringID()) {
 					case "joinComplete":
 						updateGroupInfo(use);
 						break;
 					case "hit":
-						//TODO 클라이언트 체력정보 갱신.
 						updateHPInfo(use);
 						break;
 					case "gameover":
-						//TODO 클라이언트 게임종료 실행.
 						gameOver(use);
 						break;
 				}
-				processUserEvent(cme);
 				break;
 			default:
 				return;
@@ -67,29 +64,4 @@ public class CMClientEventHandler implements CMAppEventHandler {
 			client.Game();
 		return;
 	}
-	private void processUserEvent(CMEvent cme)
-	{
-		CMUserEvent ue = (CMUserEvent) cme; //click move
-		String mode = ue.getStringID();
-		//String mode = ue.getEventField(CMInfo.CM_STR, "game");
-		switch(mode)
-		{
-			case "Join":
-				client.Game();
-				break;
-			case "click":
-				String Hp = ue.getEventField(CMInfo.CM_INT, "Hp");
-				client.PlayerHit(Integer.parseInt(Hp));
-				break;
-			case "move":
-				String x = ue.getEventField(CMInfo.CM_INT, "x");
-				String y = ue.getEventField(CMInfo.CM_INT, "y");
-				client.moveOtherPlayer(Integer.parseInt(x), Integer.parseInt(y));
-				break;
-			default:
-				return;
-		}
-		return;
-	}
-
 }
