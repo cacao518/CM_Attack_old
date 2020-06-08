@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="CM_Attack">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mysql-connector-java-5.1.31-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/commons-math3-3.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/cm.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

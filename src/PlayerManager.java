@@ -26,7 +26,16 @@ public class PlayerManager {
 		this.m_playerPosY = 300;
 		this.m_isDie = false;
 	}
+<<<<<<< HEAD
 
+=======
+	public void setProperty(String ip, String name, int group, int gunType){
+		this.setM_ip(ip);
+		this.setM_name(name);
+		this.setM_group(group);
+		this.setM_gunType(gunType);
+	}
+>>>>>>> branch 'master' of https://github.com/cacao518/CM_Attack.git
 	public String getM_ip() {
 		return m_ip;
 	}
