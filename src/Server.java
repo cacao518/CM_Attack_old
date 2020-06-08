@@ -14,10 +14,10 @@ public class Server {
 	public Server()
 	{
 		m_serverStub = new CMServerStub();
-		m_eventHandler = new CMServerEventHandler(m_serverStub);
+		m_eventHandler = new CMServerEventHandler(m_serverStub, GM, playerCount);
 		m_bRun = true;
 		playerCount = 0;
-		GM = new ArrayList(10);
+		GM = new ArrayList<GameManager>(10);
 	}
 	public void CreateGM() {
 		
