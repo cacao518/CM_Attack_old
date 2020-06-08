@@ -16,10 +16,12 @@ import kr.ac.konkuk.ccslab.cm.stub.CMServerStub;
 public class CMServerEventHandler implements CMAppEventHandler {
 	private CMServerStub m_serverStub;
 	private ArrayList<GameManager> GM;
+	private int playerCount;
 	public CMServerEventHandler(CMServerStub serverStub, ArrayList<GameManager> GM, int playerCount)
 	{
 		this.m_serverStub = serverStub;
 		this.GM = GM;
+		this.playerCount = playerCount;
 	}
 	
 	@Override
@@ -30,14 +32,20 @@ public class CMServerEventHandler implements CMAppEventHandler {
 		case CMInfo.CM_DUMMY_EVENT:
 			processDummyEvent(cme);
 			break;
+		case CMInfo.CM_USER_EVENT:
+			CMUserEvent ue = (CMUserEvent) cme;
+			if(Integer.valueOf(ue.getEventField(CMInfo.CM_INT, "group")) == -1)
+				joinPlayer(cme);
+			else
+				//∞‘¿”¡ﬂ
+			break;
 		default:
 			return;
 		}
 	}
 	private void joinPlayer(CMEvent cme) {
 		CMUserEvent ue = (CMUserEvent) cme;
-		ue.getAllEventFields().firstElement();
-//		PlayerManager pm = new PlayerManager();
+		PlayerManager pm = new PlayerManager(ue.getEventField(CMInfo.CM_STR, "ip"), ue.getEventField(CMInfo.CM_STR, "name"), Integer.valueOf(ue.getEventField(CMInfo.CM_INT, "group")),Integer.valueOf(ue.getEventField(CMInfo.CM_INT, "guntype")));
 	}
 	private void processDummyEvent(CMEvent cme)
 	{

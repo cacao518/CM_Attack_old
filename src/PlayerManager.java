@@ -2,7 +2,7 @@
 public class PlayerManager {
 	String m_ip;
 	String m_name;
-	String m_group;
+	int m_group;
 	int m_gunType;
 	int m_hp;
 	int m_bullet;
@@ -11,7 +11,7 @@ public class PlayerManager {
 	float m_playerPosX;
 	boolean m_isDie = false;
 	
-	public PlayerManager(String m_ip, String m_name, String m_group, int m_gunType) {
+	public PlayerManager(String m_ip, String m_name, int m_group, int m_gunType) {
 		super();
 		this.m_ip = m_ip;
 		this.m_name = m_name;
@@ -41,11 +41,11 @@ public class PlayerManager {
 		this.m_name = m_name;
 	}
 
-	public String getM_group() {
+	public int getM_group() {
 		return m_group;
 	}
 
-	public void setM_group(String m_group) {
+	public void setM_group(int m_group) {
 		this.m_group = m_group;
 	}
 
