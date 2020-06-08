@@ -1,10 +1,12 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import kr.ac.konkuk.ccslab.cm.entity.CMUser;
 import kr.ac.konkuk.ccslab.cm.event.CMDummyEvent;
 import kr.ac.konkuk.ccslab.cm.event.CMEvent;
 import kr.ac.konkuk.ccslab.cm.event.CMSessionEvent;
+import kr.ac.konkuk.ccslab.cm.event.CMUserEvent;
 import kr.ac.konkuk.ccslab.cm.event.handler.CMAppEventHandler;
 import kr.ac.konkuk.ccslab.cm.info.CMConfigurationInfo;
 import kr.ac.konkuk.ccslab.cm.info.CMInfo;
@@ -13,10 +15,11 @@ import kr.ac.konkuk.ccslab.cm.stub.CMServerStub;
 
 public class CMServerEventHandler implements CMAppEventHandler {
 	private CMServerStub m_serverStub;
-	
-	public CMServerEventHandler(CMServerStub serverStub)
+	private ArrayList<GameManager> GM;
+	public CMServerEventHandler(CMServerStub serverStub, ArrayList<GameManager> GM, int playerCount)
 	{
-		m_serverStub = serverStub;
+		this.m_serverStub = serverStub;
+		this.GM = GM;
 	}
 	
 	@Override
@@ -31,7 +34,10 @@ public class CMServerEventHandler implements CMAppEventHandler {
 			return;
 		}
 	}
-	
+	private void joinPlayer(CMEvent cme) {
+		CMUserEvent ue = (CMUserEvent) cme;
+//		PlayerManager pm = new PlayerManager();
+	}
 	private void processDummyEvent(CMEvent cme)
 	{
 		CMDummyEvent due = (CMDummyEvent) cme;
