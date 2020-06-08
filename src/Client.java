@@ -31,10 +31,14 @@ import kr.ac.konkuk.ccslab.cm.stub.CMClientStub;
 
 public class Client extends JFrame implements ActionListener{
 
+	Player player;
+	Player otherPlayer;
+	
 	CMClientStub m_clientStub;
 	CMClientEventHandler m_eventHandler;
 	private static boolean m_bRun;
 	static Scanner m_scan = null;
+	MatchDialog dlg1 = null;
 	
 	// Swing
 	int screenWidth;
@@ -50,7 +54,7 @@ public class Client extends JFrame implements ActionListener{
 	public Client()
 	{
 		m_clientStub = new CMClientStub();
-		m_eventHandler = new CMClientEventHandler();
+		m_eventHandler = new CMClientEventHandler(this);
 		m_bRun = true;
 		
 		Container cont = this.getContentPane();
