@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import kr.ac.konkuk.ccslab.cm.sns.CMSNSUserAccessSimulator;
 import kr.ac.konkuk.ccslab.cm.stub.CMServerStub;
 
-public class Server {
+public class Server{
 	
 	private CMServerStub m_serverStub;
 	private CMServerEventHandler m_eventHandler;
