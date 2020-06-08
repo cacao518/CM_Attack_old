@@ -5,6 +5,13 @@ import kr.ac.konkuk.ccslab.cm.info.CMInfo;
 
 public class CMClientEventHandler implements CMAppEventHandler {
 
+	Client client;
+	
+	public CMClientEventHandler(Client client) {
+		super();
+		this.client = client;
+	}
+
 	@Override
 	public void processEvent(CMEvent cme) {
 		// TODO Auto-generated method stub
@@ -13,6 +20,9 @@ public class CMClientEventHandler implements CMAppEventHandler {
 	
 		case CMInfo.CM_DUMMY_EVENT:
 			processDummyEvent(cme);
+			break;
+		case CMInfo.CM_USER_EVENT:
+			processUserEvent(cme);
 			break;
 		default:
 			return;
@@ -23,6 +33,11 @@ public class CMClientEventHandler implements CMAppEventHandler {
 	{
 		CMDummyEvent due = (CMDummyEvent) cme;
 		System.out.println("[Client] 서버로부터 답장을 받았습니다 : "+due.getDummyInfo());
+		return;
+	}
+	private void processUserEvent(CMEvent cme)
+	{
+		client.Game();
 		return;
 	}
 
