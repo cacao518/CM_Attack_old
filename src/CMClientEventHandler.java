@@ -5,6 +5,13 @@ import kr.ac.konkuk.ccslab.cm.info.CMInfo;
 
 public class CMClientEventHandler implements CMAppEventHandler {
 
+	Client client;
+	
+	public CMClientEventHandler(Client client) {
+		super();
+		this.client = client;
+	}
+
 	@Override
 	public void processEvent(CMEvent cme) {
 		// TODO Auto-generated method stub
