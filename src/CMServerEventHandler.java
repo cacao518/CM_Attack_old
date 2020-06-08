@@ -36,6 +36,7 @@ public class CMServerEventHandler implements CMAppEventHandler {
 	}
 	private void joinPlayer(CMEvent cme) {
 		CMUserEvent ue = (CMUserEvent) cme;
+		ue.getAllEventFields().firstElement();
 //		PlayerManager pm = new PlayerManager();
 	}
 	private void processDummyEvent(CMEvent cme)
